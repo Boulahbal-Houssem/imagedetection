@@ -8,7 +8,7 @@ if __name__ == "__main__":
 	from tensorflow.python.client import device_lib
 	print(device_lib.list_local_devices())
 	resizer = Image_processor()
-	data_loader = Dataset_loader([resizer])
+	data_loader = Dataset_loader([resizer],500)
 	dataset_path  =os.getcwd() + "/data/train" 
 	data, label = data_loader.load(dataset_path)
 	model = Model(data,label,test_size=0.25,batch_size =1)
