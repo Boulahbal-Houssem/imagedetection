@@ -7,14 +7,15 @@ from keras.losses import categorical_crossentropy
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
+from keras.callbacks import TensorBoard, ModelCheckpoint, ReduceLROnPlateau, EarlyStopping
+from os import getcwd
 
-
-
-logging = TensorBoard(log_dir=log_dir)
+log_dir = getcwd() +"/models_log"
 checkpoint = ModelCheckpoint(log_dir + 'ep{epoch:03d}-loss{loss:.3f}-val_loss{val_loss:.3f}.h5',
 	monitor='val_loss', save_weights_only=True, save_best_only=True, period=3)
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=3, verbose=1)
 early_stopping = EarlyStopping(monitor='val_loss', min_delta=0, patience=10, verbose=1)
+
 class Model():
 	def __init__(self, train_generator,validation_generator,test_generator,epochs=10):
 		self.train_generator = train_generator
@@ -51,7 +52,7 @@ class Model():
 		self.model.fit_generator(generator=self.train_generator,epochs=self.epochs,
                     			validation_data=self.validation_generator,
                     			use_multiprocessing=True,
-                    			workers=4)
+                    			workers=4,callbacks = [checkpoint,reduce_lr,early_stopping])
 		self.model.save("save")
 
 	def evaluate(self):
