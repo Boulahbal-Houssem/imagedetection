@@ -1,5 +1,5 @@
 from keras import backend
-assert len(backend.tensorflow_backend._get_available_gpus()) > 0
+#assert len(backend.tensorflow_backend._get_available_gpus()) > 0
 from model import Model
 from dataset.dataset_loader import  Dataset_loader
 from preprocessing.preprocessing import Image_processor
