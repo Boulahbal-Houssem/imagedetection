@@ -51,7 +51,7 @@ class Model():
 
 	def evaluate(self):
 		score, acc = self.model.evaluate_generator(generator=self.test_generator,
-                                              max_queue_size=10, workers=4, use_multiprocessing=True,
+                                              max_queue_size=10, workers=1, use_multiprocessing=False,
                                               verbose=0)
 		print('Test score:', score)
 		print('Test accuracy:', acc)

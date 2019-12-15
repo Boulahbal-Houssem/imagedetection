@@ -60,5 +60,3 @@ class DataGenerator(Sequence):
     @property
     def shape(self):
         return (self.batch_size, self.width,self.height,self.channel)
-
-
