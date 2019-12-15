@@ -10,6 +10,11 @@ from sklearn.metrics import classification_report
 
 
 
+logging = TensorBoard(log_dir=log_dir)
+checkpoint = ModelCheckpoint(log_dir + 'ep{epoch:03d}-loss{loss:.3f}-val_loss{val_loss:.3f}.h5',
+	monitor='val_loss', save_weights_only=True, save_best_only=True, period=3)
+reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=3, verbose=1)
+early_stopping = EarlyStopping(monitor='val_loss', min_delta=0, patience=10, verbose=1)
 class Model():
 	def __init__(self, train_generator,validation_generator,test_generator,epochs=10):
 		self.train_generator = train_generator
