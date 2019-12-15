@@ -2,7 +2,7 @@
 from keras import Sequential
 from keras.utils.np_utils import to_categorical
 from keras.layers import Conv2D, MaxPool2D, Input, Dense, BatchNormalization,Activation,Flatten
-from keras.optimizers import adam
+from keras.optimizers import adam,SGD
 from keras.losses import categorical_crossentropy, binary_crossentropy
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
@@ -27,26 +27,28 @@ class Model():
 	def create_model(self):
 		input_shape_ = self.train_generator.shape[1:]
 		self.model = Sequential()
-		self.model.add(Conv2D(32, (3,3),strides=(1,1), padding='same', input_shape=input_shape_ ))
+		self.model.add(Conv2D(32, (5,5),strides=(1,1), padding='same', input_shape=input_shape_ ))
 		self.model.add(Activation('relu'))
-		self.model.add(Conv2D(16, (3,3),strides=(2,2), padding='same'))
+		self.model.add(Conv2D(32, (5,5),strides=(2,2), padding='valid'))
 		self.model.add(Activation('relu'))
-		self.model.add(Conv2D(16, (3,3),strides=(1,1), padding='same'))
+		self.model.add(Conv2D(64, (3,3),strides=(1,1), padding='valid'))
 		self.model.add(Activation('relu'))
-		self.model.add(Conv2D(16, (3,3),strides=(2,2), padding='same'))
+		self.model.add(Conv2D(64, (3,3),strides=(2,2), padding='valid'))
 		self.model.add(Activation('relu'))
-		self.model.add(Conv2D(16, (3,3),strides=(2,2), padding='same'))
+		self.model.add(Conv2D(32, (3,3),strides=(2,2), padding='valid'))
 		self.model.add(Activation('relu'))
 		self.model.add(Flatten())
 		self.model.add(Dense(64))
-		self.model.add(Activation('relu'))
-		self.model.add(Dense(32))
+                self.model.add(Activation('relu'))
+                self.model.add(Dense(40))
+                self.model.add(Activation('relu'))
+		self.model.add(Dense(20))
 		self.model.add(Activation('relu'))
 		self.model.add(Dense(2))
 		self.model.add(Activation('softmax'))
 		self.summery()
-		opt = adam(0.01)
-		self.model.compile(optimizer=opt,loss=binary_crossentropy,metrics=['accuracy'])
+		opt = SGD(0.01)
+		self.model.compile(optimizer=opt,loss=categorical_crossentropy,metrics=['accuracy'])
 
 	def summery(self):
 		self.model.summary()
