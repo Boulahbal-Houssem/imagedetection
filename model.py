@@ -27,11 +27,11 @@ class Model():
 	def create_model(self):
 		input_shape_ = self.train_generator.shape[1:]
 		self.model = Sequential()
-		self.model.add(Conv2D(64, (3,3),strides=(1,1), padding='same', input_shape=input_shape_ ))
+		self.model.add(Conv2D(128, (3,3),strides=(1,1), padding='same', input_shape=input_shape_ ))
 		self.model.add(Activation('relu'))
-		self.model.add(Conv2D(32, (3,3),strides=(1,1), padding='same', input_shape=[32,32,1] ))
+		self.model.add(Conv2D(64, (3,3),strides=(2,2), padding='same', input_shape=[32,32,1] ))
 		self.model.add(Activation('relu'))
-		self.model.add(Conv2D(16, (3,3),strides=(2,2), padding='same', input_shape=[32,32,1] ))
+		self.model.add(Conv2D(32, (3,3),strides=(2,2), padding='same', input_shape=[32,32,1] ))
 		self.model.add(Activation('relu'))
 		self.model.add(Flatten())
 		self.model.add(Dense(64))
