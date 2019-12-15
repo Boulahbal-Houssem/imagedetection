@@ -3,7 +3,7 @@ from keras import Sequential
 from keras.utils.np_utils import to_categorical
 from keras.layers import Conv2D, MaxPool2D, Input, Dense, BatchNormalization,Activation,Flatten
 from keras.optimizers import adam
-from keras.losses import categorical_crossentropy
+from keras.losses import categorical_crossentropy, binary_crossentropy
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
@@ -27,11 +27,15 @@ class Model():
 	def create_model(self):
 		input_shape_ = self.train_generator.shape[1:]
 		self.model = Sequential()
-		self.model.add(Conv2D(128, (3,3),strides=(1,1), padding='same', input_shape=input_shape_ ))
+		self.model.add(Conv2D(32, (3,3),strides=(1,1), padding='same', input_shape=input_shape_ ))
 		self.model.add(Activation('relu'))
-		self.model.add(Conv2D(64, (3,3),strides=(2,2), padding='same', input_shape=[32,32,1] ))
+		self.model.add(Conv2D(16, (3,3),strides=(2,2), padding='same'))
 		self.model.add(Activation('relu'))
-		self.model.add(Conv2D(32, (3,3),strides=(2,2), padding='same', input_shape=[32,32,1] ))
+		self.model.add(Conv2D(16, (3,3),strides=(1,1), padding='same'))
+		self.model.add(Activation('relu'))
+		self.model.add(Conv2D(16, (3,3),strides=(2,2), padding='same'))
+		self.model.add(Activation('relu'))
+		self.model.add(Conv2D(16, (3,3),strides=(2,2), padding='same'))
 		self.model.add(Activation('relu'))
 		self.model.add(Flatten())
 		self.model.add(Dense(64))
@@ -42,7 +46,7 @@ class Model():
 		self.model.add(Activation('softmax'))
 		self.summery()
 		opt = adam(0.01)
-		self.model.compile(optimizer=opt,loss=categorical_crossentropy,metrics=['accuracy'])
+		self.model.compile(optimizer=opt,loss=binary_crossentropy,metrics=['accuracy'])
 
 	def summery(self):
 		self.model.summary()
