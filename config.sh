@@ -19,8 +19,8 @@ mkdir -p data
 cd data
 kaggle competitions download -c dogs-vs-cats
 unzip dogs-vs-cats
-rm dogs-vs-cats.zip sampleSubmission.csv test1.zip
 unzip train
+rm dogs-vs-cats.zip sampleSubmission.csv test1.zip train
 
 
 

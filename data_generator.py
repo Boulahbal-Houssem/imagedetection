@@ -40,11 +40,8 @@ class DataGenerator(Sequence):
         X = self.__data_generation(list_IDs_temp)
         
         y = [self.labels[k] for k in indexes]
-        print(y)
         lb = LabelEncoder()
         y = lb.fit_transform(y)
-        print(y)
-
         return (X, to_categorical(y))
 
     def on_epoch_end(self):
