@@ -10,15 +10,18 @@ pip3 install scikit-image
 
 sudo mkdir /root/.kaggle/
 #sudo ln -s ~/.local/bin/kaggle /usr/bin/kaggle
-sudo cp ./kaggle.json /home/houssem/.kaggle/kaggle.json
-#sudo cp ./kaggle.json /root/.kaggle/kaggle.json
-chmod 600 /home/houssem/.kaggle/kaggle.json
+#sudo cp ./kaggle.json /home/houssem/.kaggle/kaggle.json
+sudo cp ./kaggle.json /root/.kaggle/kaggle.json
+chmod 600 /root/.kaggle/kaggle.json
 
 # Download dataset 
-mkdir -p database
-cd database
+mkdir -p data
+cd data
 kaggle competitions download -c dogs-vs-cats
+unzip dogs-vs-cats
+rm dogs-vs-cats.zip sampleSubmission.csv test1.zip
 unzip train
+
 
 
 

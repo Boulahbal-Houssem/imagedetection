@@ -1,20 +1,18 @@
-from keras import backend
 #assert len(backend.tensorflow_backend._get_available_gpus()) > 0
 from model import Model
-from dataset.dataset_loader import  Dataset_loader
-from preprocessing.preprocessing import Image_processor
-
+from data_generator import DataGenerator, create_dataframe , split_dataframe
 import os
 
 if __name__ == "__main__":
-	from tensorflow.python.client import device_lib
-	print(device_lib.list_local_devices())
-	resizer = Image_processor()
-	data_loader = Dataset_loader([resizer])
-	dataset_path  =os.getcwd() + "/data/train" 
-	data, label = data_loader.load(dataset_path,500)
-	print("******* Data loaded ********")
-	model = Model(data,label,test_size=0.25,batch_size =1)
-	model.create_model()
-	model.fit()
-	model.evaluate()
+    data_path = os.getcwd() + "/data/train"
+    data = create_dataframe(data_path)
+    trainX, valdX , testX , trainY ,valdY,testY = split_dataframe(data)    
+    train_generator = DataGenerator(trainX,trainY,width=222,height=222,channel=3,batch_size=32)
+    validation_generator = DataGenerator(trainX,trainY,width=222,height=222,channel=3,batch_size=32)
+    test_generator = DataGenerator(trainX,trainY,width=222,height=222,channel=3,batch_size=32)
+    model = Model(train_generator,validation_generator,test_generator)
+    model.create_model()
+    model.summery()
+    model.fit()
+    model.evaluate()
+    

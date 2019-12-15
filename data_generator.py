@@ -40,11 +40,12 @@ class DataGenerator(Sequence):
         X = self.__data_generation(list_IDs_temp)
         
         y = [self.labels[k] for k in indexes]
+        print(y)
         lb = LabelEncoder()
         y = lb.fit_transform(y)
-        
         print(y)
-        return X, to_categorical(y)
+
+        return (X, to_categorical(y))
 
     def on_epoch_end(self):
         self.indexes = np.arange(len(self.data))
@@ -57,10 +58,10 @@ class DataGenerator(Sequence):
         for i, img in enumerate(file):
             image = io.imread(img)
             X[i] = resize(image,(self.width,self.height),anti_aliasing=True)
-        return X, 
-        
-path = os.getcwd()
-data = create_dataframe(path+"/data/train")
-trainX, valdX , testX , trainY ,valdY,testY = split_dataframe(data)    
-train = DataGenerator(trainX,trainY,width=222,height=222,channel=3)
-print(train[0][1])
+        return X 
+
+    @property
+    def shape(self):
+        return (self.batch_size, self.width,self.height,self.channel)
+
+
