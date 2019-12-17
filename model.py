@@ -15,7 +15,7 @@ checkpoint = ModelCheckpoint(log_dir + 'ep{epoch:03d}-loss{loss:.3f}-val_loss{va
 	monitor='val_loss', save_weights_only=True, save_best_only=True, period=3)
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=3, verbose=1)
 early_stopping = EarlyStopping(monitor='val_loss', min_delta=0, patience=10, verbose=1)
-
+chanDim = -1
 class Model():
 	def __init__(self, train_generator,validation_generator,test_generator,epochs=10):
 		self.train_generator = train_generator
@@ -36,7 +36,7 @@ class Model():
 		self.model.add(Conv2D(64, (3,3),strides=(1,1), padding='valid'))
 		self.model.add(Activation('relu'))
 		self.model.add(BatchNormalization(axis=chanDim))
-		self.model.add(MaxPooling2D(pool_size=(2, 2)))
+		self.model.add(Conv2D(64, (3,3),strides=(2,2), padding='valid'))
 		self.model.add(Activation('relu'))
 		self.model.add(BatchNormalization(axis=chanDim))
 		self.model.add(Conv2D(32, (3,3),strides=(2,2), padding='valid'))
