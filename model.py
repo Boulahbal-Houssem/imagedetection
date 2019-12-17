@@ -1,7 +1,7 @@
 
 from keras import Sequential
 from keras.utils.np_utils import to_categorical
-from keras.layers import Conv2D, MaxPool2D, Input, Dense, BatchNormalization,Activation,Flatten
+from keras.layers import Conv2D,MaxPooling2D,Dropout, MaxPool2D, Input, Dense, BatchNormalization,Activation,Flatten
 from keras.optimizers import adam,SGD
 from keras.losses import categorical_crossentropy, binary_crossentropy
 from sklearn.preprocessing import LabelEncoder
